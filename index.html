@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>주식회사 피엔피 | PnP - Gateway for Supervision</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --steel: #2c4a7c;
+    --blue: #3a6db5;
+    --sky: #5b9bd5;
+    --light-blue: #a8c8e8;
+    --cream: #ffffff;
+    --warm-white: #ffffff;
+    --dark: #0f1a2e;
+    --gold: #c9a84c;
+    --text: #2a2a2a;
+    --text-light: #666;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--warm-white);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 60px;
+    background: rgba(26, 39, 68, 0.97);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(91, 155, 213, 0.2);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+
+  .nav-logo .logo-icon {
+    width: 40px;
+    height: 40px;
+    position: relative;
+  }
+
+  .nav-logo .logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 2px;
+  }
+
+  .nav-logo .logo-sub {
+    font-size: 10px;
+    color: var(--light-blue);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: rgba(255,255,255,0.8);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    transition: color 0.3s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0; right: 0;
+    height: 1px;
+    background: var(--sky);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+
+  .nav-links a:hover { color: white; }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 120px 60px 80px;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 60% at 70% 40%, rgba(58, 109, 181, 0.15) 0%, transparent 60%),
+      radial-gradient(ellipse 50% 40% at 20% 80%, rgba(91, 155, 213, 0.08) 0%, transparent 50%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(91, 155, 213, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(91, 155, 213, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 700px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(91, 155, 213, 0.15);
+    border: 1px solid rgba(91, 155, 213, 0.3);
+    padding: 8px 18px;
+    border-radius: 2px;
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--sky);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+    animation: fadeInUp 0.8s ease forwards;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    background: var(--sky);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero-title-ko {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(42px, 6vw, 68px);
+    font-weight: 700;
+    color: white;
+    line-height: 1.15;
+    margin-bottom: 8px;
+    animation: fadeInUp 0.8s 0.1s ease both;
+  }
+
+  .hero-title-en {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
+    color: var(--sky);
+    letter-spacing: 8px;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.8s 0.2s ease both;
+  }
+
+  .hero-divider {
+    width: 80px;
+    height: 2px;
+    background: linear-gradient(to right, var(--gold), transparent);
+    margin-bottom: 28px;
+    animation: fadeInUp 0.8s 0.3s ease both;
+  }
+
+  .hero-desc {
+    font-size: 16px;
+    line-height: 1.9;
+    color: rgba(255,255,255,0.65);
+    margin-bottom: 48px;
+    animation: fadeInUp 0.8s 0.4s ease both;
+    max-width: 520px;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 16px;
+    animation: fadeInUp 0.8s 0.5s ease both;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: white;
+    padding: 14px 32px;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    font-weight: 500;
+    border: 1px solid var(--blue);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--sky);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+
+  .btn-secondary {
+    border: 1px solid rgba(255,255,255,0.3);
+    color: rgba(255,255,255,0.8);
+    padding: 14px 32px;
+    text-decoration: none;
+    font-size: 14px;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    border-color: white;
+    color: white;
+    background: rgba(255,255,255,0.05);
+  }
+
+  .hero-right {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    animation: fadeInRight 1s 0.3s ease both;
+  }
+
+  .hero-arrow-logo {
+    width: 140px;
+    height: 120px;
+    position: relative;
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 60px;
+    right: 80px;
+    display: flex;
+    gap: 48px;
+    animation: fadeInUp 1s 0.6s ease both;
+  }
+
+  .stat-item {
+    text-align: right;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  .stat-unit {
+    font-size: 14px;
+    color: var(--sky);
+    margin-left: 2px;
+  }
+
+  .stat-label {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+    letter-spacing: 1px;
+    margin-top: 4px;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translate(24px, -50%); }
+    to { opacity: 1; transform: translate(0, -50%); }
+  }
+
+  /* SECTION BASE */
+  section {
+    padding: 100px 60px;
+  }
+
+  .section-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--blue);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+
+  .section-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: clamp(28px, 3.5vw, 40px);
+    font-weight: 700;
+    color: var(--navy);
+    line-height: 1.3;
+    margin-bottom: 20px;
+  }
+
+  .section-desc {
+    font-size: 15px;
+    line-height: 1.9;
+    color: var(--text-light);
+    max-width: 560px;
+  }
+
+  /* SERVICES */
+  #services {
+    background: var(--cream);
+  }
+
+  .services-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .service-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .service-card {
+    background: white;
+    padding: 32px 36px;
+    border-left: 3px solid transparent;
+    transition: all 0.4s;
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(58, 109, 181, 0.03) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .service-card:hover {
+    border-left-color: var(--blue);
+    transform: translateX(6px);
+    box-shadow: 0 8px 40px rgba(26, 39, 68, 0.08);
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 13px;
+    color: var(--light-blue);
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+  }
+
+  .service-name {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 10px;
+  }
+
+  .service-detail {
+    font-size: 13px;
+    color: var(--text-light);
+    line-height: 1.7;
+  }
+
+  .service-tag {
+    display: inline-block;
+    margin-top: 14px;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--blue);
+    border: 1px solid var(--light-blue);
+    padding: 4px 12px;
+  }
+
+  .services-note {
+    background: var(--navy);
+    padding: 40px;
+    color: white;
+    position: sticky;
+    top: 100px;
+  }
+
+  .services-note h3 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    margin-bottom: 20px;
+    color: var(--sky);
+  }
+
+  .note-list {
+    list-style: none;
+  }
+
+  .note-list li {
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 14px;
+    color: rgba(255,255,255,0.75);
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    line-height: 1.6;
+  }
+
+  .note-list li::before {
+    content: '→';
+    color: var(--sky);
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+
+  /* ABOUT */
+  #about {
+    background: white;
+  }
+
+  .about-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 80px;
+    align-items: start;
+    margin-top: 60px;
+  }
+
+  .ceo-card {
+    background: var(--navy);
+    padding: 50px 44px;
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .ceo-card::before {
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: -30px;
+    width: 150px;
+    height: 150px;
+    border: 40px solid rgba(91, 155, 213, 0.08);
+    border-radius: 50%;
+  }
+
+  .ceo-title-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    color: var(--sky);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .ceo-hanja {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: white;
+    letter-spacing: 12px;
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+
+  .ceo-name-ko {
+    font-size: 16px;
+    color: var(--light-blue);
+    letter-spacing: 3px;
+    margin-bottom: 32px;
+  }
+
+  .ceo-divider {
+    width: 40px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 32px;
+  }
+
+  .ceo-quals {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .qual-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.7);
+  }
+
+  .qual-dot {
+    width: 6px;
+    height: 6px;
+    background: var(--sky);
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .qual-year {
+    font-size: 11px;
+    color: var(--sky);
+    min-width: 70px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  /* CAREER */
+  .career-timeline {
+    position: relative;
+    padding-left: 24px;
+  }
+
+  .career-timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--light-blue), transparent);
+  }
+
+  .career-item {
+    position: relative;
+    padding-bottom: 28px;
+    padding-left: 24px;
+  }
+
+  .career-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: var(--blue);
+    border-radius: 50%;
+    border: 2px solid white;
+    box-shadow: 0 0 0 2px var(--light-blue);
+  }
+
+  .career-period {
+    font-size: 11px;
+    color: var(--blue);
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    font-family: 'Playfair Display', serif;
+  }
+
+  .career-company {
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+
+  .about-edu {
+    background: var(--cream);
+    padding: 28px 32px;
+    margin-top: 32px;
+    border-left: 3px solid var(--blue);
+  }
+
+  .edu-label {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: var(--blue);
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+
+  .edu-text {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 16px;
+    color: var(--navy);
+    font-weight: 600;
+  }
+
+  .edu-year {
+    font-size: 13px;
+    color: var(--text-light);
+    margin-top: 4px;
+  }
+
+  /* CONTACT */
+  #contact {
+    background: var(--navy);
+    padding: 100px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(58, 109, 181, 0.15) 0%, transparent 70%);
+  }
+
+  #contact::after {
+    content: '';
+    position: absolute;
+    bottom: -80px;
+    right: -80px;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(91, 155, 213, 0.1) 0%, transparent 70%);
+  }
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-info h2 {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 36px;
+    color: white;
+    line-height: 1.4;
+    margin-bottom: 16px;
+  }
+
+  .contact-info h2 em {
+    color: var(--sky);
+    font-style: normal;
+  }
+
+  .contact-tagline {
+    font-size: 14px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+  }
+
+  .contact-items {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .contact-icon {
+    width: 44px;
+    height: 44px;
+    background: rgba(91, 155, 213, 0.15);
+    border: 1px solid rgba(91, 155, 213, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 18px;
+  }
+
+  .contact-item-label {
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--sky);
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+
+  .contact-item-value {
+    font-size: 16px;
+    color: white;
+    font-weight: 400;
+  }
+
+  .contact-form {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 48px;
+  }
+
+  .form-title {
+    font-family: 'Noto Serif KR', serif;
+    font-size: 20px;
+    color: white;
+    margin-bottom: 32px;
+  }
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--sky);
+    text-transform: uppercase;
+    margin-bottom: 8px;
+  }
+
+  .form-group input,
+  .form-group textarea {
+    width: 100%;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 14px 18px;
+    color: white;
+    font-size: 14px;
+    font-family: 'Noto Sans KR', sans-serif;
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-group input:focus,
+  .form-group textarea:focus {
+    border-color: var(--sky);
+  }
+
+  .form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+  }
+
+  .form-submit {
+    width: 100%;
+    background: var(--blue);
+    color: white;
+    padding: 16px;
+    border: none;
+    font-size: 14px;
+    letter-spacing: 2px;
+    font-family: 'Noto Sans KR', sans-serif;
+    cursor: pointer;
+    transition: background 0.3s;
+    text-transform: uppercase;
+  }
+
+  .form-submit:hover { background: var(--sky); }
+
+  /* FOOTER */
+  footer {
+    background: var(--dark);
+    padding: 40px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid rgba(91, 155, 213, 0.1);
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    color: white;
+    letter-spacing: 3px;
+  }
+
+  .footer-sub {
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  .footer-right {
+    text-align: right;
+    font-size: 12px;
+    color: rgba(255,255,255,0.3);
+    line-height: 1.8;
+  }
+
+  /* PnP Arrow SVG Logo */
+  .pnp-arrows {
+    display: flex;
+    flex-direction: column;
+    gap: -4px;
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* 햄버거 메뉴 버튼 */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+
+  .hamburger span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: white;
+    transition: all 0.3s;
+    border-radius: 2px;
+  }
+
+  .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .hamburger.open span:nth-child(2) { opacity: 0; }
+  .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+  /* 모바일 메뉴 드로어 */
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(15, 26, 46, 0.98);
+    z-index: 99;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .mobile-menu.open {
+    display: flex;
+    opacity: 1;
+  }
+
+  .mobile-menu a {
+    color: white;
+    text-decoration: none;
+    font-size: 22px;
+    letter-spacing: 4px;
+    font-weight: 300;
+    transition: color 0.3s;
+  }
+
+  .mobile-menu a:hover { color: var(--sky); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    /* 네비게이션 */
+    nav { padding: 16px 20px; }
+    .nav-links { display: none; }
+    .hamburger { display: flex; }
+
+    /* 섹션 기본 */
+    section { padding: 60px 20px; }
+
+    /* 히어로 */
+    .hero {
+      padding: 100px 20px 60px;
+      min-height: 100svh;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    .hero-right { display: none; }
+    .hero-badge { font-size: 10px; letter-spacing: 2px; padding: 7px 14px; }
+    .hero-title-ko { font-size: clamp(36px, 10vw, 52px); }
+    .hero-title-en { font-size: clamp(22px, 6vw, 32px); letter-spacing: 5px; }
+    .hero-desc { font-size: 14px; }
+    .hero-cta { flex-direction: column; gap: 12px; }
+    .btn-primary, .btn-secondary {
+      display: block;
+      text-align: center;
+      padding: 16px 24px;
+      font-size: 14px;
+    }
+    .hero-stats {
+      position: static;
+      display: flex;
+      justify-content: center;
+      gap: 28px;
+      margin-top: 40px;
+      width: 100%;
+    }
+    .hero-stats .stat-item { text-align: center; }
+    .hero-stats .stat-num { font-size: 28px; }
+    .hero-stats .stat-label { color: rgba(255,255,255,0.45); }
+
+    /* 서비스 */
+    .services-layout { grid-template-columns: 1fr; gap: 32px; }
+    .service-card { padding: 24px 20px; }
+    .services-note { padding: 28px 24px; }
+    .section-title { font-size: clamp(24px, 7vw, 32px); }
+
+    /* 어바웃/CEO */
+    .about-layout { grid-template-columns: 1fr; gap: 32px; }
+    .ceo-card { padding: 36px 28px; }
+    .ceo-hanja { font-size: 36px; letter-spacing: 8px; }
+
+    /* 컨택트 */
+    #contact { padding: 60px 20px; }
+    .contact-layout { grid-template-columns: 1fr; gap: 40px; }
+    .contact-info h2 { font-size: 28px; }
+    .contact-form { padding: 28px 20px; }
+
+    /* 푸터 */
+    footer {
+      flex-direction: column;
+      gap: 16px;
+      text-align: center;
+      padding: 32px 20px;
+    }
+    .footer-right { text-align: center; }
+
+    /* 터치 영역 확대 */
+    .form-group input,
+    .form-group textarea {
+      font-size: 16px; /* iOS 자동 확대 방지 */
+      padding: 16px;
+    }
+    .form-submit { padding: 18px; font-size: 15px; }
+  }
+
+  @media (max-width: 380px) {
+    .hero-stats { gap: 16px; }
+    .stat-num { font-size: 24px; }
+    .hero-title-ko { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg width="40" height="40" viewBox="0 0 40 40">
+      <polygon points="20,4 36,14 36,34 20,34" fill="#3a6db5" opacity="0.9"/>
+      <polygon points="20,6 4,16 4,36 20,36" fill="#5b9bd5" opacity="0.7"/>
+      <text x="11" y="26" font-family="Playfair Display,serif" font-size="13" font-weight="700" fill="white">P</text>
+    </svg>
+    <div>
+      <div class="logo-text">PnP</div>
+      <div class="logo-sub">주식회사 피엔피</div>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#services">서비스</a></li>
+    <li><a href="#about">대표소개</a></li>
+    <li><a href="#career">경력</a></li>
+    <li><a href="#contact">문의</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="메뉴">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- 모바일 메뉴 -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#services" class="mobile-link">서비스</a>
+  <a href="#about" class="mobile-link">대표소개</a>
+  <a href="#career" class="mobile-link">경력</a>
+  <a href="#contact" class="mobile-link">문의</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Gateway for Supervision</div>
+    <h1 class="hero-title-ko">주식회사<br>피엔피</h1>
+    <div class="hero-title-en">PnP</div>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      건설·전기 분야 40년 전문 경력을 바탕으로<br>
+      감리업 및 사업권 M&amp;A를 전문으로 지원합니다.<br>
+      신뢰와 전문성으로 최적의 솔루션을 제공합니다.
+    </p>
+    <div class="hero-cta">
+      <a href="#services" class="btn-primary"><span>서비스 보기</span></a>
+      <a href="#contact" class="btn-secondary">문의하기</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <svg width="160" height="140" viewBox="0 0 160 140">
+      <!-- Big blue arrow right -->
+      <polygon points="0,30 100,30 100,10 160,55 100,100 100,80 0,80" fill="#3a6db5" opacity="0.9"/>
+      <!-- White arrow left overlay -->
+      <polygon points="160,110 60,110 60,92 0,135 60,128 60,120 160,120" fill="rgba(255,255,255,0.15)"/>
+    </svg>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">40<span class="stat-unit">+</span></div>
+      <div class="stat-label">년 경력</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">4<span class="stat-unit">개</span></div>
+      <div class="stat-label">전문 자격</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">8<span class="stat-unit">개</span></div>
+      <div class="stat-label">주요 경력사</div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-label">Our Services</div>
+  <h2 class="section-title">전문 M&amp;A 서비스</h2>
+  <p class="section-desc">건설기술관리법 및 전력기술관리법에 근거한 전문 양도·양수 서비스와 사업권 M&amp;A를 제공합니다.</p>
+
+  <div class="services-layout">
+    <div class="service-cards reveal">
+      <div class="service-card">
+        <div class="service-num">01</div>
+        <div class="service-name">건설기술용역업 M&amp;A</div>
+        <div class="service-detail">건설기술관리법에 의한 건설기술용역업 양도·양수를 전문으로 중개합니다. 건축·감리 분야의 법인 및 면허 이전을 지원합니다.</div>
+        <span class="service-tag">건설기술관리법</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">02</div>
+        <div class="service-name">전기감리업 M&amp;A</div>
+        <div class="service-detail">전력기술관리법에 의한 전기감리업 양도·양수를 전문으로 지원합니다. 전기 분야 면허 및 사업체 이전을 안전하게 처리합니다.</div>
+        <span class="service-tag">전력기술관리법</span>
+      </div>
+      <div class="service-card">
+        <div class="service-num">03</div>
+        <div class="service-name">사업권 및 무형재산권 M&amp;A</div>
+        <div class="service-detail">사업권 및 무형재산권의 양도·양수를 전문으로 지원합니다. 브랜드, 노하우, 영업권 등의 이전을 법적으로 안전하게 진행합니다.</div>
+        <span class="service-tag">무형재산권</span>
+      </div>
+    </div>
+
+    <div class="services-note reveal">
+      <h3>서비스 특장점</h3>
+      <ul class="note-list">
+        <li>건설·전기 분야 40년 이상의 현장 경험을 바탕으로 한 전문 컨설팅</li>
+        <li>전기기사·전기특급감리원 등 전문 자격 보유자의 직접 상담</li>
+        <li>양도·양수 전 과정의 기업비밀 철저 보장</li>
+        <li>법적 리스크 최소화를 위한 단계별 체계적 진행</li>
+        <li>건설기술관리법·전력기술관리법 기반 적법한 절차 준수</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-label">About CEO</div>
+  <h2 class="section-title">대표이사 소개</h2>
+
+  <div class="about-layout">
+    <div class="reveal">
+      <div class="ceo-card">
+        <div class="ceo-title-label">代表理事</div>
+        <div class="ceo-hanja">宋 玹 雨</div>
+        <div class="ceo-name-ko">송 현 우</div>
+        <div class="ceo-divider"></div>
+        <div class="ceo-quals">
+          <div class="qual-item">
+            <span class="qual-dot"></span>
+            <span class="qual-year">1983</span>
+            <span>울산대학교 공과대학 전기공학과 졸업</span>
+          </div>
+          <div class="qual-item">
+            <span class="qual-dot"></span>
+            <span class="qual-year">1983.06</span>
+            <span>전기기사 취득</span>
+          </div>
+          <div class="qual-item">
+            <span class="qual-dot"></span>
+            <span class="qual-year">1984.12</span>
+            <span>전기공사기사 취득</span>
+          </div>
+          <div class="qual-item">
+            <span class="qual-dot"></span>
+            <span class="qual-year">1997.03</span>
+            <span>전기특급감리원 취득</span>
+          </div>
+          <div class="qual-item">
+            <span class="qual-dot"></span>
+            <span class="qual-year">2018.05</span>
+            <span>소방공사감리원 경력수첩<br>(전기:특급 / 기계:중급)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about-edu">
+        <div class="edu-label">Education</div>
+        <div class="edu-text">울산대학교 공과대학 전기공학과</div>
+        <div class="edu-year">1983년 2월 졸업</div>
+      </div>
+    </div>
+
+    <div class="reveal" id="career">
+      <div class="section-label">Career</div>
+      <h3 style="font-family:'Noto Serif KR',serif;font-size:24px;color:var(--navy);margin-bottom:36px;">경력 사항</h3>
+      <div class="career-timeline">
+        <div class="career-item">
+          <div class="career-period">1984.02 – 1990.06</div>
+          <div class="career-company">㈜삼익주택 근무</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">1990.06 – 1991.01</div>
+          <div class="career-company">㈜쌍용건설 근무</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">1991.04 – 1995.06</div>
+          <div class="career-company">성원건설㈜ 근무</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">1995.06 – 1998.01</div>
+          <div class="career-company">㈜미라보건설 근무</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">1998.02 – 1998.11</div>
+          <div class="career-company">㈜해강 근무</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">2000.04 – 2002.05</div>
+          <div class="career-company">대원전기관리공사</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">2002.05 – 2014.09</div>
+          <div class="career-company">㈜하림기술단</div>
+        </div>
+        <div class="career-item">
+          <div class="career-period">2014.09 – 2021.03</div>
+          <div class="career-company">㈜천도건축사사무소 및<br>㈜진광건설엔지니어링 근무</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-layout">
+    <div class="reveal">
+      <div class="section-label" style="color:var(--sky)">Contact Us</div>
+      <div class="contact-info">
+        <h2>언제든지<br><em>문의하세요</em></h2>
+        <p class="contact-tagline">Gateway for Supervision</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="contact-icon">📱</div>
+            <div>
+              <div class="contact-item-label">Mobile</div>
+              <div class="contact-item-value">010-7272-3577</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">✉️</div>
+            <div>
+              <div class="contact-item-label">E-mail</div>
+              <div class="contact-item-value">pnp0046@naver.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">🏢</div>
+            <div>
+              <div class="contact-item-label">Company</div>
+              <div class="contact-item-value">주식회사 피엔피 (PnP)</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <div class="form-title">문의 보내기</div>
+      <div class="form-group">
+        <label>성함</label>
+        <input type="text" placeholder="홍길동">
+      </div>
+      <div class="form-group">
+        <label>연락처</label>
+        <input type="text" placeholder="010-0000-0000">
+      </div>
+      <div class="form-group">
+        <label>이메일</label>
+        <input type="email" placeholder="example@email.com">
+      </div>
+      <div class="form-group">
+        <label>문의 내용</label>
+        <textarea placeholder="문의하실 내용을 입력해주세요."></textarea>
+      </div>
+      <button class="form-submit" onclick="alert('문의가 접수되었습니다.\n담당자가 빠른 시일 내 연락드리겠습니다.')">문의 접수하기</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div>
+    <div class="footer-logo">PnP</div>
+    <div class="footer-sub">주식회사 피엔피 · Gateway for Supervision</div>
+  </div>
+  <div class="footer-right">
+    대표이사 송현우<br>
+    010-7272-3577 · pnp0046@naver.com<br>
+    © 2024 주식회사 피엔피. All rights reserved.
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+  reveals.forEach(el => observer.observe(el));
+
+  // Nav scroll effect
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 50) {
+      nav.style.boxShadow = '0 4px 30px rgba(0,0,0,0.3)';
+    } else {
+      nav.style.boxShadow = 'none';
+    }
+  });
+
+  // Smooth scroll for nav links
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // 햄버거 메뉴
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('.mobile-link').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>
